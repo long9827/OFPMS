@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <form name="LoginForm" method="POST" action="login.php" onsubmit="return InutCheck(this)">
+        <p>
+            <label for="username">用户名：</label>
+            <input id="username" name="username" type="text" />
+        </p>
+        <p>
+            <label for="password">密码：</label>
+            <input id="password" name="password" type="password" />
+        </p>
+        <input type="submit" name="submit" value="登录" />
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>有机农场生产管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    
+<?php
+session_start();
+//检测是否登录，若没有登录则转向登录界面
+if(!isset($_SESSION['userid'])) {
+    header("Location: login.html");
+    exit();
+}
+?>
+
+<?php include("inc/head.php") ?>
+
+</body>
+</html>
