@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>有机农场生产管理</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 </head>
 <body>
-    
 <?php
 session_start();
 //检测是否登录，若没有登录则转向登录界面
@@ -16,9 +16,15 @@ if(!isset($_SESSION['userid'])) {
     exit();
 }
 ?>
-
-<!-- 添加头部 -->
+<!-- 头部 -->
 <?php include("inc/head.php") ?>
-
+<div class="centerBody">
+<!-- 菜单栏 -->
+<?php include("inc/menu.php") ?>
+<!-- 网页主体 -->
+<div class="container">
+    <h1>网页主体</h1>
+</div>
+</div>
 </body>
 </html>
