@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
     } else {
         exit('登录失败！点击此处<a href="javascript:history.back(-1)"；>返回</a>');
     }
-} elseif($_GET['action'] == "logout") {
+} elseif(isset($_GET['action'])) {
     //注销登录
     session_start();
     unset($_SESSION['username']);
@@ -26,7 +26,7 @@ if(isset($_POST['submit'])) {
     unset($_SESSION['identity']);
     header("Location: login.html");
 } else {
-    header("Location: 404.html");
+    http_response_code(404);
     exit;
 }
 ?>

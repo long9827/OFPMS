@@ -7,7 +7,7 @@ if($_SERVER['PHP_SELF']."" == "/OFPMS/inc/menu.php" ) {
 ?>
 <div class="menuList">
     <ul>
-        <li><a href="#">土地管理</a></li>
+        <li><a href="/OFPMS/manage/land.html">土地管理</a></li>
         <li><a href="#">生产材料购买</a></li>
         <li><a href="#">配肥和配药管理</a></li>
         <li><a href="#">生产计划管理</a></li>

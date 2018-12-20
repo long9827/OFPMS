@@ -15,6 +15,7 @@ class mysqlconn {
         $this->database = "ofpms";
         //连接服务器和数据库
         if($this->conn=mysqli_connect($this->servername, $this->server_username, $this->server_userpassword)) {
+            mysqli_set_charset($this->conn, 'utf8');
             if(!mysqli_select_db($this->conn, $this->database)) {
                 echo "数据库连接错误！！！";
                 exit;
@@ -34,6 +35,30 @@ class mysqlconn {
             exit;
         }
     }
+
+    //返回结果为json
+    function excu_json($query) {
+        //执行SQL语句
+        if($result=mysqli_query($this->conn, $query)) {
+            $count = mysqli_num_rows($result);
+            $rows = array();
+            while($row=mysqli_fetch_array($result, MYSQLI_ASSOC )) {
+                $rows[] = $row;
+            }
+            return [
+                "code" => 1,
+                "count" => $count,
+                "result" => $rows,
+            ];
+        } else {
+            return [
+                "code" => 0,
+                "count" => 0,
+                "result" => 0,
+            ];
+        }
+    }
+
 
     function __destruct() {
         if($this->conn) {

@@ -4,11 +4,16 @@ if($_SERVER['PHP_SELF']."" == "/OFPMS/inc/head.php" ) {
     header("Location: ../index.php");
 }
 @session_start();
+//检测是否登录，若没有登录则转向登录界面
+if(!isset($_SESSION['userid'])) {
+    header("Location: login.html");
+    exit();
+}
 ?>
 <div class="head">
     <div class="left">&nbsp;</div>
-    <h1 class="mainTitle">有机农场管理系统</h1>
+    <h1 class="mainTitle"><a href="/OFPMS/index.html">有机农场管理系统</a></h1>
     <div class="right">
-        <p>欢迎，<?php echo $_SESSION['username']; ?>&nbsp;&nbsp;<a href="login.php?action=logout">退出登录</a></p>
+        <p>欢迎，<?php echo $_SESSION['username']; ?>&nbsp;&nbsp;<a href="/OFPMS/login.php?action=logout">退出登录</a></p>
     </div>
 </div>

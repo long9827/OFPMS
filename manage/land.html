@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>土地管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/land.css" />
+    <script src="/OFPMS/js/jquery-3.3.1.js"></script>
+    <script src="/OFPMS/js/land.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<?php include("../inc/head.php") ?>
+<div class="centerBody">
+    <!-- 菜单栏 -->
+    <?php include("../inc/menu.php") ?>
+    <!-- 网页主体 -->
+    <div class="container">
+        <div>
+                <input id="region" placeholder="地区">
+                <input id="landmark" placeholder="地标">
+                <input id="block" placeholder="地块">
+                <input id="location" placeholder="地位">
+            <button id="showLand">查看</button>
+            
+            <button id="remove">remove</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>地区</td>
+                    <td>地标</td>
+                    <td>地块</td>
+                    <td>地位</td>
+                </tr>
+            </thead>
+            <tbody id="land_table">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
