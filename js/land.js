@@ -18,7 +18,7 @@ function loadland() {
         block: $("#block").val(),
         location: $("#location").val()
     };
-    $.post("../php/queryLand.php",  dataParam, function(data, status) {
+    $.post("../src/queryLand.php",  dataParam, function(data, status) {
         if(status=='success') {
             data = JSON.parse(data);
             if(data['code'] == 0) {
