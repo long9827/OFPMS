@@ -7,7 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/main.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/land.css" />
-    <script src="/OFPMS/libs/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/ui.jqgrid.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/ui.jqgrid-bootstrap.css" />
+
+    <script src="/OFPMS/js/jquery-1.11.0.min.js"></script>
+    <script src="/OFPMS/js/jquery.jqGrid.min.js"></script>
+
     <script src="/OFPMS/js/land.js"></script>
 </head>
 <body>
@@ -19,28 +24,15 @@
     <!-- 网页主体 -->
     <div class="container">
         <div>
-                <input id="region" placeholder="地区">
-                <input id="landmark" placeholder="地标">
-                <input id="block" placeholder="地块">
-                <input id="location" placeholder="地位">
+            <input id="region" placeholder="地区">
+            <input id="landmark" placeholder="地标">
+            <input id="block" placeholder="地块">
+            <input id="location" placeholder="地位">
             <button id="showLand">查看</button>
-            
             <button id="remove">remove</button>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <td>ID</td>
-                    <td>地区</td>
-                    <td>地标</td>
-                    <td>地块</td>
-                    <td>地位</td>
-                </tr>
-            </thead>
-            <tbody id="land_table">
-            </tbody>
-        </table>
+        <table id="jqGrid"></table>
     </div>
 </div>
 </body>
