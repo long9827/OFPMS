@@ -5,20 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>登录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap3/css/bootstrap.min.css" />
 </head>
 <body>
 
-    <form name="LoginForm" method="POST" action="login.php" onsubmit="return InutCheck(this)">
-        <p>
-            <label for="username">用户名：</label>
-            <input id="username" name="username" type="text" />
-        </p>
-        <p>
-            <label for="password">密码：</label>
-            <input id="password" name="password" type="password" />
-        </p>
-        <input type="submit" name="submit" value="登录" />
-    </form>
-    
+<div class="container">
+    <div class="col-xs-6 col-md-4 col-center-block">
+        <h1 class="textcolor">欢迎登录</h1>
+        <form method="POST" action="login.php">
+            <!-- 输入用户名 -->
+            <div class="input-group input-group-md">
+                <span class="input-group-addon" id="sizing-addon1">
+                    <i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名"/>
+            </div>
+            <!-- 输入密码 -->
+            <div class="edit input-group input-group-md">
+                <span class="input-group-addon" id="sizing-addon2">
+                    <i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"/>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-success btn-block" name="submit" value="登录">登录</button>
+        </form>
+    </div>
+    <!-- <div class="row row-centered">
+        
+    </div> -->
+</div>
 </body>
 </html>
