@@ -10,10 +10,10 @@ if(!isset($_SESSION['userid'])) {
     exit();
 }
 ?>
-<div class="head">
-    <div class="left">&nbsp;</div>
-    <h1 class="mainTitle"><a href="/OFPMS/index.html">有机农场管理系统</a></h1>
-    <div class="right">
+<div class="container-fluid">
+    <div class="col-lg-2">&nbsp;</div>
+    <h1 class="col-lg-8 text-center"><a href="/OFPMS/index.html">有机农场管理系统</a></h1>
+    <div class="col-lg-2">
         <p>欢迎，<?php echo $_SESSION['username']; ?>&nbsp;&nbsp;<a href="/OFPMS/login.php?action=logout">退出登录</a></p>
     </div>
 </div>

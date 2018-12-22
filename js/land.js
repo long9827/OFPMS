@@ -1,32 +1,215 @@
 $(function() {
 	pageinit();
+	// $(window).resize(function () {
+		　　$("#table").bootstrapTable('resetView');
+		// });
 });
 
 function pageinit() {
-	jQuery("#jqGrid").jqGrid(
+	$("#table").bootstrapTable(
 			{
-				url : 'data/JSONData.json',//组件创建完成之后请求数据的url
-				datatype : "json",//请求数据返回的类型。可选json,xml,txt
-				colNames : [ 'Inv No', 'Date', 'Client', 'Amount', 'Tax','Total', 'Notes' ],//jqGrid的列显示名字
-				colModel : [ //jqGrid每一列的配置信息。包括名字，索引，宽度,对齐方式.....
-				             {name : 'id',index : 'id',width : 55}, 
-				             {name : 'invdate',index : 'invdate',width : 90}, 
-				             {name : 'name',index : 'name asc, invdate',width : 100}, 
-				             {name : 'amount',index : 'amount',width : 80,align : "right"}, 
-				             {name : 'tax',index : 'tax',width : 80,align : "right"}, 
-				             {name : 'total',index : 'total',width : 80,align : "right"}, 
-				             {name : 'note',index : 'note',width : 150,sortable : false} 
-				           ],
-				rowNum : 10,//一页显示多少条
-				rowList : [ 10, 20, 30 ],//可供用户选择一页显示多少条
-				pager : '#pager2',//表格页脚的占位符(一般是div)的id
-				sortname : 'id',//初始化的时候排序的字段
-				sortorder : "desc",//排序方式,可选desc,asc
-				mtype : "post",//向后台请求数据的ajax的类型。可选post,get
-				viewrecords : true,
-				caption : "JSON Example"//表格的标题名字
+				url : '../src/land.php?action=list',
+				datatype : "json",
+				height: 600,
+				scroll: false,
+				uniqueId: "land_id",
+				columns: [{
+					field: 'land_id',
+					title: 'LandID',
+					visible: false
+				}, {
+					field: 'region',
+					title: '地区'
+				}, {
+					field: 'landmark',
+					title: '地标'
+				}, {
+					field: 'block',
+					title: '地块'
+				}, {
+					field: 'location',
+					title: '地位'
+				},{
+					field: 'area',
+					title: '面积'
+				},{
+					field: 'status',
+					title: '状态',
+					width: 70,
+					align: 'center',
+					formatter: function(value, row, index) {
+						return value == 0 ?
+							'<span class="label label-info">闲置</span>' :
+							'<span class="label label-success">正常</span>';
+					}
+				}, {
+					field: 'tech_name',
+					title: '技术员'
+				}, {
+					field: 'operate',
+					title: '操作',
+					width: 140,
+					align: 'center',
+					formatter: function(value, row, index) {
+						return [
+							"<button type='button' class='btn btn-warning' onclick='edit(" + row.land_id + ")'>编辑</button>"
+							+ "&nbsp;<button type='button' class='btn btn-danger' onclick='deleteRow(" + row.land_id + ")'>删除</button>"
+						];
+					}
+				} ]
 			});
-	/*创建jqGrid的操作按钮容器*/
-	/*可以控制界面上增删改查的按钮是否显示*/
-	jQuery("#jqGrid").jqGrid('navGrid', '#pager2', {edit : false,add : false,del : false});
 }
+
+function edit(id) {
+	vm.edit(id);
+}
+
+function deleteRow(id) {
+	vm.delete(id);
+}
+
+var vm = new Vue({
+	el: '#app',
+	data: {
+		landInfo: {
+			region: '',
+			landmark: '',
+			block: '',
+			location: ''
+		},
+		addlandInfo:{},
+	},
+	methods: {
+		search: function() {
+			$.ajax({
+				type: "post",
+				url: "../src/land.php?action=list",
+				data: {
+					region: vm.landInfo.region,
+					landmark: vm.landInfo.landmark,
+					block: vm.landInfo.block,
+					location: vm.landInfo.location
+				},
+				dataType:"json",
+				success : function(json) {
+						   $("#table").bootstrapTable('load', json);
+				}
+			});
+		},
+
+		add: function() {
+			vm.addlandInfo = {
+				region: '',
+				landmark: '',
+				block: '',
+				location: '',
+				status: 0,
+				tech: ''
+			};
+			$("#modal_title").text("新增");
+            $("#myModal").modal("show");
+		},
+		delete: function(id) {
+			var row = $("#table").bootstrapTable('getRowByUniqueId', id);
+			var msg = "确定删除土地：\n地区：" + row.region + "\n地标：" + row.landmark + "\n地块：" + row.block + "\n地位：" + row.location; 
+			if(confirm(msg)) {
+				//确认删除土地
+				$.ajax({
+					type: "post",
+					url: "../src/land.php?action=delete",
+					data: {
+						land_id: id,
+					},
+					dataType: "json",
+					success: function(json) {
+						if(json['code'] == '0') {
+							alert("删除成功");
+						} else {
+							alert("删除\n"+json['msg']);
+						}
+					}
+				});
+			}
+		},
+		edit: function(id) {
+			var row = $("#table").bootstrapTable('getRowByUniqueId', id);
+			vm.addlandInfo = {
+				land_id: id,
+				region: row.region,
+				landmark: row.landmark,
+				block: row.block,
+				location: row.location,
+				area: row.area,
+				status: row.status,
+				tech: row.tech_name
+			};
+			$("#modal_title").text("修改");
+            $("#myModal").modal("show");
+		},
+		modalCommit: function() {
+			$("#myModal").modal("hide");
+			
+			if($("#modal_title").text() =="新增") {
+				//新增土地
+				$.ajax({
+					type: "post",
+					url: "../src/land.php?action=add",
+					data: {
+						region: vm.addlandInfo.region,
+						landmark: vm.addlandInfo.landmark,
+						block: vm.addlandInfo.block,
+						location: vm.addlandInfo.location,
+						area: vm.addlandInfo.area,
+						status: vm.addlandInfo.status,
+						tech: vm.addlandInfo.tech
+					},
+					dataType: "json",
+					success: function(json) {
+						if(json['code'] == '0') {
+							alert("添加成功");
+						} else {
+							alert("添加\n"+json['msg']);
+						}
+					}
+				});
+			} else if($("#modal_title").text() =="修改") {
+				//修改土地
+				// console.log("xiugai");
+				$.ajax({
+					type: "post",
+					url: "../src/land.php?action=edit",
+					data: {
+						land_id: vm.addlandInfo.land_id,
+						region: vm.addlandInfo.region,
+						landmark: vm.addlandInfo.landmark,
+						block: vm.addlandInfo.block,
+						location: vm.addlandInfo.location,
+						area: vm.addlandInfo.area,
+						status: vm.addlandInfo.status,
+						tech: vm.addlandInfo.tech
+					},
+					dataType: "json",
+					success: function(json) {
+						if(json['code'] == '0') {
+							alert("修改成功");
+						} else {
+							alert("添加\n"+json['msg']);
+						}
+					}
+				});
+			}
+		},
+		reload: function() {
+			$.ajax({
+				type: "post",
+				url: "../src/land.php?action=list",
+				data: {},
+				dataType:"json",
+				success : function(json) {
+						   $("#table").bootstrapTable('load', json);
+				}
+			});
+		}
+		
+	}
+});

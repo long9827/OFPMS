@@ -5,10 +5,10 @@ if($_SERVER['PHP_SELF']."" == "/OFPMS/inc/menu.php" ) {
 }
 // @session_start();
 ?>
-<div class="menuList">
+<div class="col-md-2">
     <ul>
         <li><a href="/OFPMS/manage/land.html">土地管理</a></li>
-        <li><a href="#">生产材料购买</a></li>
+        <li><a href="/OFPMS/manage/purchase.html">生产材料购买</a></li>
         <li><a href="#">配肥和配药管理</a></li>
         <li><a href="#">生产计划管理</a></li>
         <li><a href="#">农作记录管理</a></li>
