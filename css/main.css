@@ -1,0 +1,16 @@
+body {
+    background-color: aliceblue;
+}
+
+
+.title {
+    position: relative;
+    bottom: 20px;
+}
+
+#logout {
+    position: relative;
+    top: 40px;
+
+    /* background-color: blueviolet; */
+}

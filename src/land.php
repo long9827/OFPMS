@@ -1,5 +1,6 @@
 <?php
 $action = $_GET['action'];
+// echo $action;
 
 if($action == "list") {
     //查询土地
@@ -21,28 +22,82 @@ if($action == "list") {
         $location = $_POST['location'];
         $query .= "and location like '%$location%' ";
     }
-    $query .= "order by land_id";
+    if(isset($_POST['tech_name']) && $_POST['tech_name'] != '') {
+        $tech_name = $_POST['tech_name'];
+        $query .= "and tech_name like '%$tech_name%' ";
+    }
+    if(isset($_POST['status']) && $_POST['status'] != '2') {
+        $status = $_POST['status'];
+        $query .= "and status = $status ";
+    }
+    $query .= "order by 'region'";
+    // echo $query;
     include("../inc/mysql.php");
-    $sql = new mysqlconn();
-    $rows = $sql->excu_json($query);
+    $conn = new mysqlconn();
+    $rows = $conn->excu_json($query);
     echo json_encode($rows);
 } elseif($action == "add") {
-    //新增土地
-    // $response[] = array();
-    @$response->code = '-1';
-    @$response->msg = 'unknon error';
+    // 新增土地
+    $region = $_POST['region'];
+    $landmark = $_POST['landmark'];
+    $block = $_POST['block'];
+    $location = $_POST['location'];
+    $area = $_POST['area']=='' ? 0 : $_POST['area'];
+    $status = $_POST['status'];
+    $tech_name = $_POST['tech'];
+
+    if($region!='') {
+        $sql = "INSERT INTO land(region, landmark, block, location, area, status, tech_name)
+            VALUES ('$region', '$landmark', '$block', '$location', $area, $status, '$tech_name')";
+        include("../inc/mysql.php");
+        $conn = new mysqlconn();
+        if($conn->excu($sql)) {
+            @$response->code = '0';
+        } else {
+            @$response->code = '-1';
+            @$response->msg = "该地位已存在！";
+        }
+    } else {
+        @$response->code = '-1';
+        @$response->msg = "请输入！";
+    }
     echo json_encode($response);
 } elseif($action == "edit") {
     //修改土地
-    @$response->code = '-1';
-    @$response->msg = 'unknon error; lnad_id: ' .$_POST['land_id'] ;
+    $land_id = $_POST['land_id'];
+    $region = $_POST['region'];
+    $landmark = $_POST['landmark'];
+    $block = $_POST['block'];
+    $location = $_POST['location'];
+    $area = $_POST['area']=='' ? 0 : $_POST['area'];
+    $status = $_POST['status'];
+    $tech_name = $_POST['tech'];
+
+    $sql = "UPDATE land SET region='$region', landmark='$landmark', block='$block', 
+            location='$location', area=$area, status=$status, tech_name='$tech_name' 
+            WHERE land_id=$land_id";
+    include("../inc/mysql.php");
+    $conn = new mysqlconn();
+    if($conn->excu($sql)) {
+        @$response->code = '0';
+    } else {
+        @$response->code = '-1';
+        @$response->msg = "修该失败！";
+    }
     echo json_encode($response);
 } elseif($action == "delete") {
     //删除土地
-    @$response->code = '-1';
-    @$response->msg = '删除 lnad_id: ' .$_POST['land_id'] ;
+    $land_id = $_POST['land_id'];
+    $sql = "DELETE FROM land WHERE land_id = $land_id";
+    include("../inc/mysql.php");
+    $conn = new mysqlconn();
+    if($conn->excu($sql)) {
+        @$response->code = '0';
+    } else {
+        @$response->code = '-1';
+        @$response->msg = "删除失败！";
+    }
     echo json_encode($response);
 } 
-
 
 ?>

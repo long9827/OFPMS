@@ -28,12 +28,7 @@ class mysqlconn {
     
 	function excu($query) {
         //执行SQL语句
-        if($result=mysqli_query($this->conn, $query)) {
-            return $result;
-        } else {
-            echo "sql语句执行错误！！！请重试!!!";
-            exit;
-        }
+        return mysqli_query($this->conn, $query);
     }
 
     //返回结果为json

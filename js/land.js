@@ -1,8 +1,5 @@
 $(function() {
 	pageinit();
-	// $(window).resize(function () {
-		　　$("#table").bootstrapTable('resetView');
-		// });
 });
 
 function pageinit() {
@@ -75,7 +72,9 @@ var vm = new Vue({
 			region: '',
 			landmark: '',
 			block: '',
-			location: ''
+			location: '',
+			tech_name: '',
+			status: 2
 		},
 		addlandInfo:{},
 	},
@@ -88,11 +87,13 @@ var vm = new Vue({
 					region: vm.landInfo.region,
 					landmark: vm.landInfo.landmark,
 					block: vm.landInfo.block,
-					location: vm.landInfo.location
+					location: vm.landInfo.location,
+					tech_name: vm.landInfo.tech_name,
+					status: vm.landInfo.status
 				},
 				dataType:"json",
 				success : function(json) {
-						   $("#table").bootstrapTable('load', json);
+					$("#table").bootstrapTable('load', json);
 				}
 			});
 		},
@@ -103,6 +104,7 @@ var vm = new Vue({
 				landmark: '',
 				block: '',
 				location: '',
+				area: '',
 				status: 0,
 				tech: ''
 			};
@@ -111,7 +113,7 @@ var vm = new Vue({
 		},
 		delete: function(id) {
 			var row = $("#table").bootstrapTable('getRowByUniqueId', id);
-			var msg = "确定删除土地：\n地区：" + row.region + "\n地标：" + row.landmark + "\n地块：" + row.block + "\n地位：" + row.location; 
+			var msg = "确定要删除土地：\n地区：" + row.region + "\n地标：" + row.landmark + "\n地块：" + row.block + "\n地位：" + row.location; 
 			if(confirm(msg)) {
 				//确认删除土地
 				$.ajax({
@@ -125,8 +127,10 @@ var vm = new Vue({
 						if(json['code'] == '0') {
 							alert("删除成功");
 						} else {
+							console.log(json['msg']);
 							alert("删除\n"+json['msg']);
 						}
+						vm.reload();
 					}
 				});
 			}
@@ -168,8 +172,9 @@ var vm = new Vue({
 						if(json['code'] == '0') {
 							alert("添加成功");
 						} else {
-							alert("添加\n"+json['msg']);
+							alert("添加失败！\n"+json['msg']);
 						}
+						vm.reload();
 					}
 				});
 			} else if($("#modal_title").text() =="修改") {
@@ -193,8 +198,9 @@ var vm = new Vue({
 						if(json['code'] == '0') {
 							alert("修改成功");
 						} else {
-							alert("添加\n"+json['msg']);
+							alert(json['msg']);
 						}
+						vm.reload();
 					}
 				});
 			}

@@ -5,8 +5,8 @@ if($_SERVER['PHP_SELF']."" == "/OFPMS/inc/menu.php" ) {
 }
 // @session_start();
 ?>
-<div class="col-md-2">
-    <ul>
+<div  class="col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
         <li><a href="/OFPMS/manage/land.html">土地管理</a></li>
         <li><a href="/OFPMS/manage/purchase.html">生产材料购买</a></li>
         <li><a href="#">配肥和配药管理</a></li>

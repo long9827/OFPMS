@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap3/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap-table/bootstrap-table.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/main.css" />
 
     <script src="/OFPMS/libs/vue.min.js"></script>
     <script src="/OFPMS/libs/jquery.min.js"></script>
@@ -24,14 +25,51 @@
     <?php include("../inc/menu.php") ?>
     <!-- 网页主体 -->
     <div id="app" class="col-md-8">
-        <div class="container">
-            <input type="text" placeholder="地区" v-model="landInfo.region">
-            <input type="text" placeholder="地标" v-model="landInfo.landmark">
-            <input type="text" placeholder="地块" v-model="landInfo.block">
-            <input type="text" placeholder="地位" v-model="landInfo.location">
-            <button type="button" v-on:click="search">查询</button>
-            <button type="button" v-on:click="add">新增</button>
-        </div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-1 control-label">地块</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="地区" v-model="landInfo.region">
+                </div>
+                <div class="col-sm-1 control-label">地标</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="地标" v-model="landInfo.landmark">
+                </div>
+                <div class="col-sm-1 control-label">地块</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="地块" v-model="landInfo.block">
+                </div>
+                <div class="con-sm-1">
+                        <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
+                        <button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-1 control-label">地位</div>
+                <div class="col-sm-2">
+                    <input class="form-control" type="text" placeholder="地位" v-model="landInfo.location">
+                </div>
+                <div class="col-sm-1 control-label">技术员</div>
+                <div class="col-sm-2">
+                    <input class="form-control" type="text" placeholder="技术员" v-model="landInfo.tech_name">
+                </div>
+                <div class="col-sm-1 control-label">状态</div>
+                <div class="col-sm-2">
+                    <select class="form-control" v-model="landInfo.status">
+                        <option value="2">全部</option>
+                        <option value="0">闲置</option>                                    
+                        <option value="1">使用</option>
+                    </select>
+                        <!-- <input class="form-control" type="text" placeholder="状态" > -->
+                </div>
+            </div>
+            <div class="form-group">
+
+            
+            
+            </div>
+        </form>
+        
         <table id="table" ></table>
 
         <!-- 增加土地弹出框 -->
