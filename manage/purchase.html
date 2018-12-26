@@ -6,6 +6,14 @@
     <title>生产材料购买记录</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap3/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap-table/bootstrap-table.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/main.css" />
+	
+	<script src="/OFPMS/libs/vue.min.js"></script>
+    <script src="/OFPMS/libs/jquery.min.js"></script>
+    <script src="/OFPMS/libs/bootstrap3/js/bootstrap.min.js"></script>
+    <script src="/OFPMS/libs/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/OFPMS/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script><!--框架样式--！>
 
 </head>
 <body>
@@ -18,6 +26,39 @@
     <div class="col-md-8">
 
         <h1>生产材料购买记录</h1>
+		 <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-1 control-label">购置记录编号</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="购置记录编号" v-model="landInfo.region">
+                </div>
+                <div class="col-sm-1 control-label">购置日期</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="购置日期" v-model="landInfo.landmark">
+                </div>
+                <div class="col-sm-1 control-label">购置单价</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="购置单价" v-model="landInfo.block">
+                </div>
+				<div class="col-sm-1 control-label">产品名称</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="产品名称" v-model="landInfo.block">
+                </div>
+				<div class="col-sm-1 control-label">购置数量</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="购置数量" v-model="landInfo.block">
+                </div>
+				<div class="col-sm-1 control-label">备注</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="备注" v-model="landInfo.block">
+                </div>
+                <div class="con-sm-1">
+                        <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
+                </div>
+           
+
+              </div>
+        </form>
 
     </div> 
 </div>
