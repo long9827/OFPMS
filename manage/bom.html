@@ -28,19 +28,114 @@
     <div id="app" class="col-md-8">
         <form class="form-horizontal">
             <div class="form-group">
-                <div class="con-sm-1">
-                        <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
-                        <!-- <button class="btn btn-primary" type="button" v-on:click="add">新增</button> -->
+                <div class="col-sm-1 control-label">编号</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="编号" v-model="bomInfo.number">
+                </div>
+                <div class="col-sm-1 control-label">名称</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="名称" v-model="bomInfo.name">
                 </div>
             </div>
             <div class="form-group">
-
-            
-            
+                <div class="col-sm-1 control-label">日期</div>
+                <div class="col-sm-2">
+                        <input class="form-control" type="text" placeholder="日期" v-model="bomInfo.date">
+                </div>
+                
+                <div class="col-sm-2 col-sm-offset-1">
+                    <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
+                    <button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+                </div>
             </div>
         </form>
         
         <table id="table" ></table>
+
+        <!-- 增加肥料或农药弹出框 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="modal_title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" style="width:100%;">
+                                <div class="form-group">
+                                    <div class="col-sm-2 control-label">编号</div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" v-model='addbomInfo.number' />
+                                    </div>
+                                    <div class="col-sm-2 control-label">日期</div>
+                                    <div class="col-sm-3">
+                                            <input type="text" class="form-control" v-model='addbomInfo.date' />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2 control-label">名称</div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" v-model='addbomInfo.name' />
+                                    </div>
+                                    <div class="col-sm-2 control-label">劳务费</div>
+                                    <div class="col-sm-3">
+                                            <input type="text" class="form-control" v-model='addbomInfo.cost' />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2 control-label">损耗比</div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" v-model='addbomInfo.waste_rate' />
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="modalCommit">
+                            提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- 增加肥料或农药原料弹出框 -->
+        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="detailTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" style="width:100%;">
+                                <div class="form-group">
+                                    <div class="col-sm-2 control-label">名称</div>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control" v-model='bom_detailInfo.material_name' />
+                                    </div>
+                                    <div class="col-sm-2 control-label">重量</div>
+                                    <div class="col-sm-3">
+                                            <input type="text" class="form-control" v-model='bom_detailInfo.material_wgt' />
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="detailCommit">
+                            提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
     </div> 
 </div>
 
