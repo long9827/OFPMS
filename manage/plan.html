@@ -26,37 +26,27 @@
     <?php include("../inc/menu.php") ?>
     <!-- 网页主体 -->
     <div id="app" class="col-md-8">
-        
-        <h1>生产计划管理</h1>
-		        <form class="form-horizontal">
-            <div class="form-group">
-                <div class="col-sm-1 control-label">生产计划编号</div>
-                <div class="col-sm-2">
-                        <input class="form-control" type="text" placeholder="生产计划编号" v-model="landInfo.name">
-                </div>              
-                <div class="con-sm-1">
-                        <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
-                        <button class="btn btn-primary" type="button" v-on:click="add">新增</button>
-                </div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-1 control-label">生产计划编号</div>
+				<div class="col-sm-2">
+					<input class="form-control" type="text" placeholder="生产计划编号" >
+				</div>              
+				<div class="con-sm-1">
+					<button class="btn btn-primary" type="button" v-on:click="search">查询</button>
+					<button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-1 control-label">技术员</div>
+				<div class="col-sm-2">
+					<input class="form-control" type="text" placeholder="技术员" >
+				</div>
             </div>
-			</form>
-		
-
-    </div> 
-</div>
- <div class="form-group">
-   
-                <div class="col-sm-1 control-label">技术员</div>
-                <div class="col-sm-2">
-                    <input class="form-control" type="text" placeholder="技术员" v-model="landInfo.tech_name">
-                </div>
-               
-            </div>
-        </form>
-        
+		</form>		
         <table id="table" ></table>
-
-        <!-- 增加 弹出框 -->
+		
+		<!-- 增加 弹出框 -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -66,52 +56,52 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" style="width:100%;">
-                                <div class="form-group">
-                                    <div class="col-sm-2 control-label">蔬菜名</div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" v-model='addlandInfo.name' />
-                                    </div>
-                                    <div class="col-sm-2 control-label">制定生产计划日期</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.plan_date' />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-2 control-label">预计播种日期</div>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" v-model='addlandInfo.forecast_sow_land' />
-                                    </div>
-                                    <div class="col-sm-2 control-label">预计播种土地</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.forecast_market_date' />
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-2 control-label">预计上市日期</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.forecast_market_date' />
-                                    </div>
-                                    <div class="col-sm-2 control-label">预计上市那天的采购量</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.forecast_market_date_purchase quantity' />
-                                    </div>
-									<div class="col-sm-2 control-label">预计高峰日期</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.forecast_high_date' />
-                                    </div>
-									<div class="col-sm-2 control-label">预计高峰那天的采购量</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.forecast_high_date_purchase quantity' />
-                                    </div>
-									<div class="col-sm-2 control-label">预计下市日期</div>
-                                    <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.forecast_sold out_date' />
-                                    </div>
-                                </div>
-                                <div class="form-group">
+							<div class="form-group">
+								<div class="col-sm-2 control-label">蔬菜名</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+								<div class="col-sm-2 control-label">制定生产计划日期</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 control-label">预计播种日期</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+								<div class="col-sm-2 control-label">预计播种土地</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 control-label">预计上市日期</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+								<div class="col-sm-2 control-label">预计上市那天的采购量</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+								<div class="col-sm-2 control-label">预计高峰日期</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-sm-2 control-label">预计高峰那天的采购量</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+								<div class="col-sm-2 control-label">预计下市日期</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  />
+								</div>
+							</div>
+							<div class="form-group">
                                     <div class="col-sm-2 control-label">技术员</div>
                                     <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.tech' />
+										<input type="text" class="form-control"  />
                                     </div>
                                 </div>
                         </form>
@@ -129,6 +119,12 @@
         </div><!-- /.modal -->
 
     </div> 
+</div>
+
+
+
+     
+
 </div>
 
 

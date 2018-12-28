@@ -16,31 +16,31 @@ function pageinit() {
 					visible: false
 				}, {
 					field: 'name',
-					title: '蔬菜名'
+					title: '名称'
 				}, {
 					field: 'plan_date',
-					title: '制定生产计划的日期'
+					title: '制定日期'
 				}, {
 					field: 'forecast_sow_date',
-					title: '预计播种日期'
+					title: '播种日期'
 				}, {
 					field: 'forecast_sow_land',
-					title: '预计播种土地'
+					title: '地位'
 				},{
 					field: 'forecast_market_date',
-					title: '预计上市日期'
+					title: '上市日期'
 				},{
 					field: 'forecast_market_date_purchase quantity',
-					title: '预计上市那天的采购量'
+					title: '上市采购量'
 				},{
 					field: 'forecast_high_date',
-					title: '预计高峰日期'
+					title: '高峰日期'
 				},{
 					field: 'forecast_high_date_purchase quantity',
-					title: '预计高峰那天的采购量'
+					title: '高峰采购量'
 				},{
 					field: 'forecast_sold out_date',
-					title: '预计下市日期'
+					title: '下市日期'
 				}, {
 					field: 'tech_name',
 					title: '技术员'
