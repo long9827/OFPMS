@@ -45,7 +45,7 @@ function pageinit() {
             } ],
             onExpandRow: function(index, row, $detail) {    //创建子表
                 var bom_id = row.id;
-                var sub = $detail.html("<table></table>").find('table');
+                var sub = $detail.html("<table id='child_table" + bom_id  + "'></table>").find('table');
                 $(sub).bootstrapTable({
                     url : '../src/bom.php?action=list_detail',
                     datatype: "json",
@@ -56,6 +56,10 @@ function pageinit() {
                     columns: [ {
                         field: 'id',
                         text: 'bom_detailID',
+                        visible: false
+                    }, {
+                        field: 'bom_id',
+                        text: 'bom_id',
                         visible: false
                     }, {
                         field: 'material_name',
@@ -79,15 +83,12 @@ function pageinit() {
                         }
                     }],
                     onClickRow: function(row, $element) {
-                        // vm.bom_detailInfo.material_name = row.material_name;
-                        // vm.bom_detailInfo.material_wgt = row.material_wgt;
                         vm.bom_detailInfo = {
+                            bom_id: row.bom_id,
                             id: row.id,
                             material_name: row.material_name,
                             material_wgt: row.material_wgt,
                         };
-                        vm.subTable = sub;
-                        vm.rowID = bom_id;
                     }
                 })
             }
@@ -125,8 +126,6 @@ var vm = new Vue({
 	data: {
         addbomInfo: {},
         bom_detailInfo: {},
-        subTable: null,
-        rowID: null,
         bomInfo: {}
 	},
 	methods: {
@@ -275,13 +274,12 @@ var vm = new Vue({
 							console.log(json['msg']);
 							alert(json['msg']);
 						}
-						vm.subReload();
+						vm.subReload(vm.bom_detailInfo.bom_id);
 					}
 				});
 			}
         },
         editDetail: function(id) {
-            // console.log(vm.bom_detailInfo.material_name);
             vm.bom_detailInfo.id = id;
 			$("#detailTitle").text("修改原料");
             $("#detailModal").modal("show");
@@ -290,12 +288,11 @@ var vm = new Vue({
             $("#detailModal").modal("hide");
             if($("#detailTitle").text() =="新增原料") {
                 //新增原料
-                // console.log(vm.bom_id)
 				$.ajax({
 					type: "post",
 					url: "../src/bom.php?action=addDetail",
 					data: {
-                        bom_id: vm.rowID,
+                        bom_id: vm.bom_detailInfo.bom_id,
                         material_name: vm.bom_detailInfo.material_name,
                         material_wgt: vm.bom_detailInfo.material_wgt
 					},
@@ -307,7 +304,7 @@ var vm = new Vue({
 							alert(
                                 json['msg']);
 						}
-						vm.subReload();
+						vm.subReload(vm.bom_detailInfo.bom_id);
 					}
 				});
 			} else if($("#detailTitle").text() =="修改原料") {
@@ -327,21 +324,21 @@ var vm = new Vue({
 						} else {
 							alert(json['msg']);
 						}
-						vm.subReload();
+						vm.subReload(vm.bom_detailInfo.bom_id);
 					}
 				});
 			}
         },
-        subReload: function() {
+        subReload: function(bom_id) {
 			$.ajax({
 				type: "post",
 				url: "../src/bom.php?action=list_detail",
 				data: {
-                    bom_id: vm.rowID
+                    bom_id: bom_id
                 },
 				dataType:"json",
 				success : function(json) {
-						   $(vm.subTable).bootstrapTable('load', json);
+						   $("#child_table"+bom_id).bootstrapTable('load', json);
 				}
 			});
         }
