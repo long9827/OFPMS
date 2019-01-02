@@ -47,6 +47,7 @@ function pageinit() {
 			title: '操作',
 			width: 140,
 			align: 'center',
+			visible: hasPermission('purchase:operate'),
 			formatter: function(value, row, index) {
 				return [
 					"<button type='button' class='btn btn-warning' onclick='edit(" + row.id + ")'>修改</button>"

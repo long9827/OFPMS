@@ -2,9 +2,17 @@
 $action = $_GET['action'];
 // echo $action;
 
+@session_start();
 if($action == "list") {
     //查询土地
-    $query = "select * from land where 1=1  ";
+    // $query = "select * from land where 1=1  ";
+    if($_SESSION['identity']==2) {
+        //技术人员
+        $tech_id = $_SESSION['userid'];
+        $query = "from land where tech_id=$tech_id  ";
+    } else {
+        $query = "from land where 1=1  ";
+    }
 
     if(isset($_POST['region'])) {
         $region = $_POST['region'];
@@ -30,11 +38,15 @@ if($action == "list") {
         $status = $_POST['status'];
         $query .= "and status = $status ";
     }
-    $query .= "order by 'region'";
+    $query .= "order by region";
     // echo $query;
+    $queryArea = "select sum(area) as sum " . $query;
+    $query = "select * " .$query;
     include("../inc/mysql.php");
     $conn = new mysqlconn();
     $rows = $conn->excu_json($query);
+    $area = $conn->excu_json($queryArea);
+    $rows[0]['sum_area'] = $area[0]['sum'];
     echo json_encode($rows);
 } elseif($action == "add") {
     // 新增土地

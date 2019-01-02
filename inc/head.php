@@ -19,5 +19,3 @@ if(!isset($_SESSION['userid'])) {
     </div>        
 </div>
 
-
-<script src="/OFPMS/js/common.js"></script>

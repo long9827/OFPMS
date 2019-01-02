@@ -39,9 +39,9 @@
                 <div class="col-sm-2">
                         <input class="form-control" type="text" placeholder="地块" v-model="landInfo.block">
                 </div>
-                <div class="con-sm-1">
+                <div class="col-sm-2 ">
                         <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
-                        <button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+                        <button class="btn btn-primary" type="button"  v-if="hasPermission('land:add')" v-on:click="add">新增</button>
                 </div>
             </div>
             <div class="form-group">
@@ -49,12 +49,11 @@
                 <div class="col-sm-2">
                     <input class="form-control" type="text" placeholder="地位" v-model="landInfo.location">
                 </div>
-                <div class="col-sm-1 control-label">技术员</div>
-                <div class="col-sm-2">
+                <div class="col-sm-1 control-label" v-if="hasPermission('land:select_tech')">技术员</div>
+                <div class="col-sm-2" v-if="hasPermission('land:select_tech')">
                     <select class="form-control" v-model="landInfo.tech_id">
                         <option v-for="option in techs" v-bind:value="option.user_id">{{option.username}}
                     </select>
-                    <!-- <input class="form-control" type="text" placeholder="技术员" v-model="landInfo.tech_name"> -->
                 </div>
                 <div class="col-sm-1 control-label">状态</div>
                 <div class="col-sm-2">
@@ -63,7 +62,10 @@
                         <option value="0">闲置</option>                                    
                         <option value="1">使用</option>
                     </select>
-                        <!-- <input class="form-control" type="text" placeholder="状态" > -->
+                </div>                
+                <div class="col-sm-1 control-label">总面积</div>
+                <div class="col-sm-1">
+                    <input class="form-control" type="text" readonly="readonly" v-model="sum_area">
                 </div>
             </div>
             <div class="form-group">

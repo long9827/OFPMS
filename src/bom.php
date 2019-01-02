@@ -27,14 +27,15 @@ if($action == "list") {
 } elseif($action == "add") {
     // 新增
     if(isset($_POST['number']) && isset($_POST['produce_date']) && isset($_POST['bom_name']) 
-            && isset($_POST['labor_cost']) && isset($_POST['waste_rate'])) {
+            && isset($_POST['class']) && isset($_POST['labor_cost']) && isset($_POST['waste_rate'])) {
         $number = $_POST['number'];
         $produce_date = $_POST['produce_date'];
         $bom_name = $_POST['bom_name'];
+        $class = $_POST['class'];
         $labor_cost = $_POST['labor_cost'];
         $waste_rate = $_POST['waste_rate'];
-        $sql = "INSERT INTO bom(number, produce_date, bom_name, labor_cost, waste_rate)
-            VALUES ('$number', '$produce_date', '$bom_name', '$labor_cost', '$waste_rate');";
+        $sql = "INSERT INTO bom(number, produce_date, bom_name, class, labor_cost, waste_rate)
+            VALUES ('$number', '$produce_date', '$bom_name', $class, '$labor_cost', '$waste_rate');";
         // echo $query;
         include("../inc/mysql.php");
         $conn = new mysqlconn();
@@ -54,11 +55,12 @@ if($action == "list") {
     $id = $_POST['id'];
     $number = $_POST['number'];
     $bom_name = $_POST['bom_name'];
+    $class = $_POST['class'];
     $produce_date = $_POST['produce_date'];
     $labor_cost = $_POST['labor_cost'];
     $waste_rate = $_POST['waste_rate'];
 
-    $sql = "UPDATE bom SET number='$number', bom_name='$bom_name', 
+    $sql = "UPDATE bom SET number='$number', bom_name='$bom_name', class=$class,
             produce_date='$produce_date', labor_cost='$labor_cost', waste_rate='$waste_rate'
             WHERE id=$id";
     // echo $sql;

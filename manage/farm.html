@@ -26,12 +26,104 @@
     <?php include("../inc/menu.php") ?>
     <!-- 网页主体 -->
     <div id="app" class="col-md-8">
-        
-        <h1>农作记录管理</h1>
+		<form class="form-horizontal">
+				<div class="form-group">
+					<div class="col-sm-1 control-label">编号</div>
+					<div class="col-sm-2">
+						<input class="form-control" type="text" placeholder="记录编号" v-model="searchInfo.number" >
+					</div>
+					<div class="col-sm-1 control-label">日期</div>
+					<div class="col-sm-2">
+						<input class="form-control" type="text" placeholder="农作日期" v-model="searchInfo.farm_date">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">操作</div>
+					<div class="col-sm-2">
+						<input class="form-control" type="text" placeholder="操作" v-model="searchInfo.farm_name">
+					</div>
+					<div class="col-sm-2 col-sm-offset-1">
+						<button class="btn btn-primary" type="button" v-on:click="search">查询</button>
+						<button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+					</div>
+				</div>
+		</form>		
+        <table id="table" ></table>
+		
+		
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="modal_title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" style="width:100%;">
+							<div class="form-group">
+								<div class="col-sm-2 control-label">编号</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control"  v-model="addfarmInfo.number" />
+								</div>
+								<div class="col-sm-2 control-label">日期</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" v-model="addfarmInfo.farm_date" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 control-label">地位</div>
+								<div class="col-sm-3">
+										<select class="form-control" v-model="addfarmInfo.land_id">
+											<option v-for="option in lands" v-bind:value="option.land_id">{{option.name}}
+										</select>
+								</div>
+								<div class="col-sm-2 control-label">劳作名称</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" v-model="addfarmInfo.farm_name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 control-label">用料类别</div>
+								<div class="col-sm-3">
+									<select class="form-control" @change="classChange()" v-model="addfarmInfo.class">
+											<option value="4">肥料</option>
+											<option value="3">农药</option>
+											<option value="0">种子</option>
+									</select>
+								</div>
+								<div class="col-sm-2 control-label">用料名</div>								
+								<div class="col-sm-3">
+										<select class="form-control" v-model="addfarmInfo.bom_name">
+											<option v-for="option in bom_name" v-bind:value="option.name">{{option.name}}
+										</select>
+									</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 control-label">使用量</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" v-model="addfarmInfo.amount" />
+								</div>
+								<div class="col-sm-2 control-label">劳务费</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" v-model="addfarmInfo.labor_cost" />
+								</div>
+							</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="modalCommit">
+                            提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
     </div> 
 </div>
-
 
     <script src="/OFPMS/js/farm.js"></script>
 </body>

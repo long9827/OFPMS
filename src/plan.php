@@ -77,7 +77,7 @@ if($action == "list") {
         @$response->code = '0';
     } else {
         @$response->code = '-1';
-        @$response->msg = "添加失败！";
+        @$response->msg = "修改失败！";
     }
     echo json_encode($response);
 } elseif($action == "delete") {

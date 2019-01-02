@@ -22,6 +22,12 @@ function pageinit() {
                 field: 'bom_name',
                 title: '名称'
             }, {
+                field: 'class',
+                title: '类别',
+                formatter: function(value, row, index) {
+                    return value=='3'?'农药':'肥料';
+                }
+            }, {
                 field: 'produce_date',
                 title: '日期'
             }, {
@@ -151,7 +157,7 @@ var vm = new Vue({
         },
         delete: function(id) {
 			var row = $("#table").bootstrapTable('getRowByUniqueId', id);
-			var msg = "确定要删除该记录：\n编号：" + row.number + "\n名称：" + row.bom_name; 
+			var msg = "确定要删除该记录：\n编号：" + row.number + "\n农作名称：" + row.bom_name; 
 			if(confirm(msg)) {
 				//确认删除记录
 				$.ajax({
@@ -179,6 +185,7 @@ var vm = new Vue({
                 id: id,
                 number: row.number,
                 name: row.bom_name,
+                class: row.class,
                 date: row.produce_date,
                 cost: row.labor_cost,
                 waste_rate: row.waste_rate
@@ -198,6 +205,7 @@ var vm = new Vue({
                         number: vm.addbomInfo.number,
                         produce_date: vm.addbomInfo.date,
                         bom_name: vm.addbomInfo.name,
+                        class: vm.addbomInfo.class,
                         labor_cost: vm.addbomInfo.cost,
                         waste_rate: vm.addbomInfo.waste_rate
 					},
@@ -222,6 +230,7 @@ var vm = new Vue({
                         id: vm.addbomInfo.id,
                         number: vm.addbomInfo.number,
                         bom_name: vm.addbomInfo.name,
+                        class: vm.addbomInfo.class,
                         produce_date: vm.addbomInfo.date,
                         labor_cost: vm.addbomInfo.cost,
                         waste_rate: vm.addbomInfo.waste_rate

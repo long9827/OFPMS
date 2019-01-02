@@ -36,7 +36,7 @@
                 </div>
                 <div class="con-sm-1">
                     <button class="btn btn-primary" type="button" v-on:click="search">查询</button>
-                    <button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+                    <button class="btn btn-primary" type="button" v-on:click="add" v-if="hasPermission('purchase:add')">新增</button>
                 </div>
             </div>
             <div class="form-group">

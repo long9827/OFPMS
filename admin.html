@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>农作记录管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap3/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/libs/bootstrap-table/bootstrap-table.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/OFPMS/css/main.css" />
+
+    <script src="/OFPMS/libs/vue.min.js"></script>
+    <script src="/OFPMS/libs/jquery.min.js"></script>
+    <script src="/OFPMS/libs/bootstrap3/js/bootstrap.min.js"></script>
+    <script src="/OFPMS/libs/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/OFPMS/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+
+</head>
+<body>
+<?php
+session_start();
+if(!isset($_SESSION['userid'])) {
+    header("Location: login.html");
+    exit();
+}
+if($_SESSION['identity']!='0') {
+    header("Location: index.html");
+    exit();
+}
+?>
+<div class="container-fluid page-header text-center">
+    <h1 class="col-md-6 col-md-offset-3 title">权限管理</h1>
+    <div id="logout" class="col-md-2 col-md-offset-1">
+        <span>欢迎，<?php  echo $_SESSION['username']; ?>&nbsp;&nbsp;<a href="/OFPMS/login.php?action=logout">退出登录</a></span>
+    </div>        
+</div>
+<div class="container-fluid">
+    <!-- 网页主体 -->
+    <div id="app" class="col-md-8">
+		<form class="form-horizontal">
+				<div class="col-sm-2">
+					<button class="btn btn-primary" type="button" onclick="addAuth()">添加权限</button>
+					<button class="btn btn-primary" type="button" v-on:click="add">授予权限</button>
+				</div>
+		</form>	
+
+        <table id="table" ></table>
+
+        <!-- !-- 增加 弹出框 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">授予权限</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" style="width:100%;">
+							<div class="form-group">
+								<div class="col-sm-2 control-label">身份</div>
+								<div class="col-sm-3">
+                                    <select class="form-control" v-model="addInfo.identity">
+                                            <option value="1">农场主</option>
+                                            <option value="2">技术人员</option>
+                                            <option value="3">市场人员</option>
+                                            <option value="4">访客</option>
+                                    </select>
+								</div>
+								<div class="col-sm-2 control-label">权限</div>
+								<div class="col-sm-3">
+									<select class="form-control" v-model="addInfo.auth">
+                                        <option v-for="option in auths" v-bind:value="option.id">{{option.name}}
+                                    </select>
+								</div>
+							</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="modalCommit">
+                            提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+    </div> 
+</div>
+
+    <script src="/OFPMS/js/admin.js"></script>
+</body>
+</html>

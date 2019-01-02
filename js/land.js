@@ -52,6 +52,7 @@ function pageinit() {
 					title: '操作',
 					width: 140,
 					align: 'center',
+					visible: hasPermission('land:operate'),
 					formatter: function(value, row, index) {
 						return [
 							"<button type='button' class='btn btn-warning' onclick='edit(" + row.land_id + ")'>编辑</button>"
@@ -81,6 +82,7 @@ var vm = new Vue({
 			tech_name: '',
 			status: 2
 		},
+		sum_area: 0,
 		addlandInfo:{},
 		techs: {}
 	},
@@ -115,6 +117,8 @@ var vm = new Vue({
 				dataType:"json",
 				success : function(json) {
 					$("#table").bootstrapTable('load', json);
+					// console.log(json[0]['sum_area']);
+					vm.sum_area = json[0]['sum_area'];
 				}
 			});
 		},
