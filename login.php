@@ -14,6 +14,7 @@ if(isset($_POST['submit'])) {
         $_SESSION['username'] = $username;
         $_SESSION['userid'] = $result['user_id'];
         $_SESSION['identity'] = $result['identity'];
+        setcookie('user_id', $result['user_id']);
         header("Location: index.html");
     } else {
         exit('登录失败！点击此处<a href="javascript:history.back(-1)"；>返回</a>');

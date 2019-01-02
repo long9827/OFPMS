@@ -22,9 +22,9 @@ if($action == "list") {
         $location = $_POST['location'];
         $query .= "and location like '%$location%' ";
     }
-    if(isset($_POST['tech_name']) && $_POST['tech_name'] != '') {
-        $tech_name = $_POST['tech_name'];
-        $query .= "and tech_name like '%$tech_name%' ";
+    if(isset($_POST['tech_id']) && $_POST['tech_id'] != '') {
+        $tech_id = $_POST['tech_id'];
+        $query .= "and tech_id like '%$tech_id%' ";
     }
     if(isset($_POST['status']) && $_POST['status'] != '2') {
         $status = $_POST['status'];
@@ -44,13 +44,22 @@ if($action == "list") {
     $location = $_POST['location'];
     $area = $_POST['area']=='' ? 0 : $_POST['area'];
     $status = $_POST['status'];
-    $tech_name = $_POST['tech'];
+    $tech_id = $_POST['tech_id'];
+    // $tech_name = $_POST['tech_name'];
 
     if($region!='') {
-        $sql = "INSERT INTO land(region, landmark, block, location, area, status, tech_name)
-            VALUES ('$region', '$landmark', '$block', '$location', $area, $status, '$tech_name')";
+        $sql = "INSERT INTO land(region, landmark, block, location, area, status,)
+            VALUES ('$region', '$landmark', '$block', '$location', $area, $status)";
+        
         include("../inc/mysql.php");
         $conn = new mysqlconn();
+        if($tech_id != '-1') {
+            $query = "select username from user where user_id = $tech_id;";
+            $rows = $conn->excu_json($query);
+            $tech_name = $rows[0]['username'];
+            $sql = "INSERT INTO land(region, landmark, block, location, area, status, tech_id, tech_name)
+                VALUES ('$region', '$landmark', '$block', '$location', $area, $status, $tech_id, '$tech_name')";
+        }
         if($conn->excu($sql)) {
             @$response->code = '0';
         } else {
@@ -71,13 +80,26 @@ if($action == "list") {
     $location = $_POST['location'];
     $area = $_POST['area']=='' ? 0 : $_POST['area'];
     $status = $_POST['status'];
-    $tech_name = $_POST['tech'];
+    $tech_id = $_POST['tech_id'];
 
-    $sql = "UPDATE land SET region='$region', landmark='$landmark', block='$block', 
-            location='$location', area=$area, status=$status, tech_name='$tech_name' 
-            WHERE land_id=$land_id";
     include("../inc/mysql.php");
     $conn = new mysqlconn();
+    if($tech_id!=''&&$tech_id!='-1') {
+        // echo "ok";
+        $query = "select username from user where user_id = $tech_id;";
+        $rows = $conn->excu_json($query);
+        $tech_name = $rows[0]['username'];
+        
+        $sql = "UPDATE land SET region='$region', landmark='$landmark', block='$block', 
+            location='$location', area=$area, status=$status, tech_id=$tech_id, tech_name='$tech_name' 
+            WHERE land_id=$land_id";
+    } else {
+        $sql = "UPDATE land SET region='$region', landmark='$landmark', block='$block', 
+        location='$location', area=$area, status=$status, tech_id=null, tech_name=''
+        WHERE land_id=$land_id";
+    }
+
+    // echo $sql;
     if($conn->excu($sql)) {
         @$response->code = '0';
     } else {
@@ -98,6 +120,12 @@ if($action == "list") {
         @$response->msg = "删除失败！";
     }
     echo json_encode($response);
-} 
+} elseif($action == "techs") {
+    $query = "SELECT DISTINCT username, user_id FROM user WHERE identity= 2;";
+    include("../inc/mysql.php");
+    $conn = new mysqlconn();
+    $rows = $conn->excu_json($query);
+    echo json_encode($rows);
+}
 
 ?>

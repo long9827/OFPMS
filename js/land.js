@@ -1,5 +1,6 @@
 $(function() {
 	pageinit();
+	vm.initTechs();
 });
 
 function pageinit() {
@@ -40,6 +41,10 @@ function pageinit() {
 							'<span class="label label-success">正常</span>';
 					}
 				}, {
+					field: 'tech_id',
+					titel: 'tech_id',
+					visible: false
+				}, {
 					field: 'tech_name',
 					title: '技术员'
 				}, {
@@ -77,8 +82,24 @@ var vm = new Vue({
 			status: 2
 		},
 		addlandInfo:{},
+		techs: {}
 	},
 	methods: {
+		initTechs: function() {
+			$.ajax({
+				type: "post",
+				url: "../src/land.php?action=techs",
+				data: {},
+				dataType:"json",
+				success : function(json) {
+					vm.techs = eval(json);
+					vm.techs.push({
+						user_id: -1,
+						username: '空'
+					});
+				}
+			});
+		},
 		search: function() {
 			$.ajax({
 				type: "post",
@@ -88,7 +109,7 @@ var vm = new Vue({
 					landmark: vm.landInfo.landmark,
 					block: vm.landInfo.block,
 					location: vm.landInfo.location,
-					tech_name: vm.landInfo.tech_name,
+					tech_id: vm.landInfo.tech_id,
 					status: vm.landInfo.status
 				},
 				dataType:"json",
@@ -106,7 +127,7 @@ var vm = new Vue({
 				location: '',
 				area: '',
 				status: 0,
-				tech: ''
+				tech_id: -1
 			};
 			$("#modal_title").text("新增");
             $("#myModal").modal("show");
@@ -145,7 +166,7 @@ var vm = new Vue({
 				location: row.location,
 				area: row.area,
 				status: row.status,
-				tech: row.tech_name
+				tech_id: row.tech_id
 			};
 			$("#modal_title").text("修改");
             $("#myModal").modal("show");
@@ -165,7 +186,8 @@ var vm = new Vue({
 						location: vm.addlandInfo.location,
 						area: vm.addlandInfo.area,
 						status: vm.addlandInfo.status,
-						tech: vm.addlandInfo.tech
+						tech_id: vm.addlandInfo.tech_id,
+						
 					},
 					dataType: "json",
 					success: function(json) {
@@ -191,7 +213,7 @@ var vm = new Vue({
 						location: vm.addlandInfo.location,
 						area: vm.addlandInfo.area,
 						status: vm.addlandInfo.status,
-						tech: vm.addlandInfo.tech
+						tech_id: vm.addlandInfo.tech_id
 					},
 					dataType: "json",
 					success: function(json) {

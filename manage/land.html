@@ -51,7 +51,10 @@
                 </div>
                 <div class="col-sm-1 control-label">技术员</div>
                 <div class="col-sm-2">
-                    <input class="form-control" type="text" placeholder="技术员" v-model="landInfo.tech_name">
+                    <select class="form-control" v-model="landInfo.tech_id">
+                        <option v-for="option in techs" v-bind:value="option.user_id">{{option.username}}
+                    </select>
+                    <!-- <input class="form-control" type="text" placeholder="技术员" v-model="landInfo.tech_name"> -->
                 </div>
                 <div class="col-sm-1 control-label">状态</div>
                 <div class="col-sm-2">
@@ -118,7 +121,10 @@
                                 <div class="form-group">
                                     <div class="col-sm-2 control-label">技术员</div>
                                     <div class="col-sm-3">
-                                            <input type="text" class="form-control" v-model='addlandInfo.tech' />
+                                        <select class="form-control" v-model="addlandInfo.tech_id">
+                                            <option v-for="option in techs" v-bind:value="option.user_id">{{option.username}}
+                                        </select>
+                                        <!-- <input type="text" class="form-control" v-model='addlandInfo.tech' /> -->
                                     </div>
                                 </div>
                         </form>

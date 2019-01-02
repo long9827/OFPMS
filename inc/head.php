@@ -18,3 +18,6 @@ if(!isset($_SESSION['userid'])) {
         <span>欢迎，<?php echo $_SESSION['username']; ?>&nbsp;&nbsp;<a href="/OFPMS/login.php?action=logout">退出登录</a></span>
     </div>        
 </div>
+
+
+<script src="/OFPMS/js/common.js"></script>

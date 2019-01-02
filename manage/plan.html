@@ -14,7 +14,7 @@
     <script src="/OFPMS/libs/jquery.min.js"></script>
     <script src="/OFPMS/libs/bootstrap3/js/bootstrap.min.js"></script>
     <script src="/OFPMS/libs/bootstrap-table/bootstrap-table.js"></script>
-    <script src="/OFPMS/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+	<script src="/OFPMS/libs/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
 
 </head>
 <body>
@@ -28,21 +28,34 @@
     <div id="app" class="col-md-8">
 		<form class="form-horizontal">
 			<div class="form-group">
-				<div class="col-sm-1 control-label">生产计划编号</div>
+				<div class="col-sm-1 control-label">编号</div>
 				<div class="col-sm-2">
-					<input class="form-control" type="text" placeholder="生产计划编号" >
-				</div>              
-				<div class="con-sm-1">
+					<input class="form-control" type="text" placeholder="编号" v-model="searchInfo.number" >
+				</div>
+				<div class="col-sm-1 control-label">蔬菜名</div>
+				<div class="col-sm-2">
+					<input class="form-control" type="text" placeholder="蔬菜名" v-model="searchInfo.vgt_name" >
+				</div>
+				<div class="col-sm-2">
 					<button class="btn btn-primary" type="button" v-on:click="search">查询</button>
-					<button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+					<button class="btn btn-primary" type="button" v-on:click="add" v-if="hasPermission('plan:add')">新增</button>
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-1 control-label">技术员</div>
+				<div class="col-sm-1 control-label">播种日期</div>
 				<div class="col-sm-2">
-					<input class="form-control" type="text" placeholder="技术员" >
+					<input class="form-control" type="text" placeholder="播种日期" v-model="searchInfo.sow_date" >
 				</div>
-            </div>
+				<div class="col-sm-1 control-label">状态</div>
+				<div class="col-sm-2">
+					<select class="form-control" v-model="searchInfo.status">
+							<option value="2">全部</option>
+							<option value="1">正常</option>
+							<option value="0">中止</option>
+					</select>
+				</div>
+			</div>
+			
 		</form>		
         <table id="table" ></table>
 		
@@ -57,53 +70,56 @@
                     <div class="modal-body">
                         <form class="form-horizontal" style="width:100%;">
 							<div class="form-group">
+								<div class="col-sm-2 control-label">生产编号</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" v-model="planInfo.number"  />
+								</div>
 								<div class="col-sm-2 control-label">蔬菜名</div>
 								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
-								</div>
-								<div class="col-sm-2 control-label">制定生产计划日期</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
+									<select class="form-control" v-model="planInfo.vgt_name">
+										<option v-for="option in vegetables" v-bind:value="option.material_name">{{option.material_name}}
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-2 control-label">预计播种日期</div>
+								<div class="col-sm-2 control-label">播种日期</div>
 								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
+									<input type="text" class="form-control" v-model="planInfo.sow_date" />
 								</div>
-								<div class="col-sm-2 control-label">预计播种土地</div>
+								<div class="col-sm-2 control-label">地位</div>
 								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-2 control-label">预计上市日期</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
-								</div>
-								<div class="col-sm-2 control-label">预计上市那天的采购量</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
-								</div>
-								<div class="col-sm-2 control-label">预计高峰日期</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-sm-2 control-label">预计高峰那天的采购量</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
-								</div>
-								<div class="col-sm-2 control-label">预计下市日期</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control"  />
+									<select class="form-control" v-model="planInfo.land_id">
+										<option v-for="option in lands" v-bind:value="option.land_id">{{option.name}}
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
-                                    <div class="col-sm-2 control-label">技术员</div>
-                                    <div class="col-sm-3">
-										<input type="text" class="form-control"  />
-                                    </div>
+									<div class="col-sm-2 control-label">上市日期</div>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" v-model="planInfo.list_date" />
+									</div>
+									<div class="col-sm-2 control-label">上市采收量</div>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" v-model="planInfo.list_harvest_wgt" />
+									</div>
                                 </div>
+								<div class="form-group">
+										<div class="col-sm-2 control-label">高峰日期</div>
+										<div class="col-sm-3">
+											<input type="text" class="form-control" v-model="planInfo.peak_date" />
+										</div>
+										<div class="col-sm-2 control-label">高峰采收量</div>
+										<div class="col-sm-3">
+											<input type="text" class="form-control" v-model="planInfo.peak_harvest_wgt" />
+										</div>
+								</div>
+								<div class="form-group">
+										<div class="col-sm-2 control-label">下市日期</div>
+										<div class="col-sm-3">
+											<input type="text" class="form-control" v-model="planInfo.delist_date" />
+										</div>
+									</div>
+								
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -116,17 +132,50 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		
+		<!-- 中止 弹出框 -->
+        <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="stopmodal_title">中止计划</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" style="width:100%;">
+							<div class="form-group">
+								<div class="col-sm-2 control-label">生产编号</div>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" readonly="readonly" v-model="stopInfo.number" />
+								</div>
+								<div class="col-sm-2 control-label">中止日期</div>
+								<div class="col-sm-3">
+									<input type="text" id="stop_date" class="form-control" v-model="stopInfo.stop_date" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-2 control-label">中止原因</div>
+								<div class="col-sm-8">
+									<input type="text" id="reason" class="form-control" v-model="stopInfo.reason" />
+								</div>
+							</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                        <button type="button" class="btn btn-primary" id="stopbtn" @click="stopCommit">
+                            提交
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
     </div> 
 </div>
-
-
-
-     
-
-</div>
-
 
     <script src="/OFPMS/js/plan.js"></script>
 </body>
