@@ -44,7 +44,7 @@
 					</div>
 					<div class="col-sm-2 col-sm-offset-1">
 						<button class="btn btn-primary" type="button" v-on:click="search">查询</button>
-						<button class="btn btn-primary" type="button" v-on:click="add">新增</button>
+						<button class="btn btn-primary" type="button" v-on:click="add" v-if="hasPermission('farm:add')">新增</button>
 					</div>
 				</div>
 		</form>		

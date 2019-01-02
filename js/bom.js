@@ -41,6 +41,7 @@ function pageinit() {
                 title: '操作',
                 width: 220,
                 align: 'center',
+                visible: hasPermission('bom:operate'),
                 formatter: function(value, row, index) {
                     return [
                         "<button type='button' class='btn btn-info' onclick='add_material(" + row.id + ")'>添加原料</button>"
@@ -81,6 +82,7 @@ function pageinit() {
                         title: '操作',
                         align: 'center',
                         width: 150,
+                        visible: hasPermission('bom:operate'),
                         formatter: function(value, row, index) {
                             return [
                                 "<button type='button' class='btn btn-warning' onclick='editDetail(" + row.id + ")'>修改</button>"

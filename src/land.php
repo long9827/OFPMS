@@ -30,7 +30,7 @@ if($action == "list") {
         $location = $_POST['location'];
         $query .= "and location like '%$location%' ";
     }
-    if(isset($_POST['tech_id']) && $_POST['tech_id'] != '') {
+    if(isset($_POST['tech_id']) && $_POST['tech_id'] != '-1') {
         $tech_id = $_POST['tech_id'];
         $query .= "and tech_id like '%$tech_id%' ";
     }

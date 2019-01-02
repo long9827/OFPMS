@@ -53,11 +53,8 @@ function pageinit() {
 					align: 'center',
 					visible: hasPermission('farm:operate'),
 					formatter: function(value, row, index) {
-
-						var str = '';
 						if(getCookie('user_id') == row.tech_id) {
 							//该计划由已登录管理员创建，可以增删改
-
 							return [
 								"<button type='button' class='btn btn-warning' onclick='edit(" + row.id + ")'>编辑</button>"
 								+ "&nbsp;<button type='button' class='btn btn-danger' onclick='deleteRow(" + row.id + ")'>删除</button>"
